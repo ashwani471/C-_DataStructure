@@ -12,6 +12,18 @@ void sortinSortedManner(int * arr , int n){
     for(int j=0;j<max;j++){
         A[j]=0;
     }
+
+    for(int i =0 ; i<n ; i++){
+        A[arr[i]]++;
+    }
+
+    for(int j=0;j<max;j++){
+        int freq;
+        if(A[j]!=0){
+            freq=A[j];
+        }
+        // for()
+    }
 }
 
 int main(){
