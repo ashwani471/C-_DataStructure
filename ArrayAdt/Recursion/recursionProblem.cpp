@@ -1,6 +1,8 @@
 #include<iostream>
 using namespace std;
 
+int fib[10] = {-1};
+
 int Power(int x , int n){
 
     if(x>0){
@@ -119,11 +121,123 @@ int SumOfNaturalNumber(int n){
     return smallOutput;
 }
 
+
+
+int mFibo(int n){
+    if(n<=1){
+       fib[n]=n;
+       return n;
+    }
+    else{
+        if(fib[n-2]==-1){
+          fib[n-2]=mFibo(n-2);
+        }
+        if(fib[n-1]==-1){
+            fib[n-1]=mFibo(n-1);
+        }
+        return fib[n-2]+fib[n-1];
+    }
+}
+
+int multiplicationRec(int m , int n){
+    if(n<m){
+        if(n==0){
+            return 0;
+        }
+        int smalloutput = multiplicationRec(m,n-1);
+        return smalloutput+m;
+    }else{
+        if(m==0){
+            return 0;
+        }
+        int smalloutput = multiplicationRec(m-1,n);
+        return smalloutput+n;
+    }
+}
+
+int countZero(int n){
+    if(n<=9&&n>=0){
+           if(n==0){
+            return 1;
+           }else{
+            return 0;
+           }
+    }
+ int smallOutput = countZero(n/10);
+ if(n%10==0){
+    return smallOutput+1;
+ }else{
+    return smallOutput;
+ }
+
+}
+
+static int p=1;
+static int f=1;
+
+double taylorSeries(int e , int n){
+if(n==0){
+    return 1;
+}
+double smallOutput = taylorSeries(e,n-1);
+p=p*e;
+f=f*n;
+return smallOutput+p/f;
+}
+static double g=1;
+// static int s=1;
+double geometricSum(int n,int x){
+    if(n==0){
+        return 1;
+    }
+    double smallOutput = geometricSum(n-1,x);
+    g=g*x;
+    return smallOutput + 1/g;
+}
+
+bool checkPalindromeRec(char str[],int s,int e){
+    if(s==e){
+        return true;
+    }
+    if(str[s]!=str[e]){
+        return false;
+    }
+    bool smallOutput = checkPalindromeRec(str,s+1,e-1);
+    return smallOutput;
+}
+
 int main(){
-    int n;
-    cout<<"Enter a number:";
-    // cout<<"Enter the power:";
-    cin>>n;
+    // int n;
+    // cout<<"Enter a number:";
+    // // cout<<"Enter the power:";
+    // cin>>n;
+    // int x;
+    // cout<<"Enter the value of x:";
+    // cin>>x;
+    // // cout<<taylorSeries(x,n);
+    // cout<<geometricSum(n,x);
+
+     char str[50];
+     cout<<"Enter a string:";
+     cin>>str;
+     int len=0;
+     for(int i=0;str[i]!='\0';i++){
+          len++;
+     }
+    //  cout<<len;
+     int st=0;
+     int end=len-1;
+      cout<<checkPalindromeRec(str,st,end);
+
+    // int m;
+    // cout<<"Enter a second no:";
+    // cin>>m;
+    // cout<<multiplicationRec(m,n);
+    // cout<<countZero(n);
+    // int i;
+    // for(i=0;i<10;i++){
+    //     fib[i]=-1;
+    // }
     // int *arr = new int[n];
     // for(int i=0 ; i<n ; i++){
     //     cin>>arr[i];
@@ -133,7 +247,8 @@ int main(){
     // cin>>x;
     // TreeRecursion(n);
     // cout<<nestedRecursion(97);
-    cout<<SumOfNaturalNumber(n);
+    // cout<<SumOfNaturalNumber(n);
+    // cout<<mFibo(n);
     // cout<<is_Sorted(arr, n);
     // cout<<arraySum(arr,n);
     // cout<<searchElement(arr,n,x);
