@@ -206,28 +206,202 @@ bool checkPalindromeRec(char str[],int s,int e){
     return smallOutput;
 }
 
+void replacePi(char str[] , int st ,  int e){
+    if(str[st]=='\0' || str[st+1]=='\0'){
+        return;
+    }
+    replacePi(str,st+1,e-1);
+    if(str[st]=='p'&&str[st+1]=='i'){
+        for(int i = e;i>=st+2;i--){
+            str[i+2]=str[i];
+        }
+        str[st]='3';
+        str[st+1]='.';
+        str[st+2]='1';
+        str[st+3]='4';
+    }
+}
+
+void removeX(char str[]){
+
+if(str[0]=='\0'){
+    return;
+}
+
+  if(str[0]!='x'){
+    removeX(str+1);
+  }else{
+    int i=1;
+    for(;str[i]!='\0';i++){
+        str[i-1]=str[i];
+    }
+    str[i-1]=str[i];
+    removeX(str);
+  }
+
+}
+
+// int stringtoInteger(char str[],int n){
+//     if(n==0){
+//         int a = str[n]-'0';
+//         return a;
+//     }
+//     int y=stringtoInteger( str,n-1);
+//            int x=str[n]-'0';
+//            y=y*10+x;
+    
+// }
+
+// static int count=0;
+
+// int * allIndeces(int arr[],int idx,int x,int count,int e){
+//     if(idx==e){
+//         int iarr[count];
+//         return iarr;
+//     }
+//     int *ptr;
+//     if(arr[idx]==x){
+        
+//         ptr=allIndeces(arr,idx+1,x,count+1,e);
+//         ptr[count]=idx;
+//     }else{
+//         ptr=allIndeces(arr,idx+1,x,count,e);
+//     }
+//     return ptr;
+// }
+
+void pairStar(char str[],int n){
+    if(n==0){
+        return;
+    }
+    if(str[0]==str[1]){
+        for(int i=1;i<n;i++){
+            str[i+1]=str[i];
+        }
+        str[1]='*';
+        pairStar(str+2,n-2);
+    }else{
+        pairStar(str+1,n-1);
+    }
+}
+
+void replaceChar(char str[] , char c1,char c2){
+    if(str[0]=='\0'){
+        return;
+    }
+    if(str[0]==c1){
+        str[0]=c2;
+    }
+    replaceChar(str+1,c1,c2);
+}
+
+void removeConsecutiveDuplicates(char str[]){
+    if(str[0]=='\0'|| str[1]=='\0'){
+       return;
+    }
+    if(str[0]==str[1]){
+        int i=1;
+        for(;str[i]!='\0';i++){
+            str[i-1]=str[i];
+        }
+        str[i-1]=str[i];
+        removeConsecutiveDuplicates(str);
+    }else{
+        removeConsecutiveDuplicates(str+1);
+    }
+}
+
+void merge(int input[],int si,int mid,int ei){
+    int i=si;
+    int j=mid+1;
+    int *output= new int[ei-si+1];
+    int k=0;
+    while(i<=mid&& j<=ei){
+
+        if(input[i]<input[j]){
+            output[k]=input[i];
+            i++;
+            k++;
+        }else{
+             output[k]=input[j];
+             k++;
+             j++;    
+        }
+
+        if(i<=mid){
+            output[k]=input[i];
+            i++;k++;
+        }
+        if(j<=ei){
+            output[k]=input[i];
+            j++;
+            k++;
+        }
+   }
+   int i=0;
+   for(;i<=ei;i++){
+    input[i]=output[i];
+    i++;
+   }
+}
+
+void mergeSort(int input[],int si,int ei){
+    if(si>=ei){
+        return;
+    }
+    int mid = (si+ei)/2;
+    mergeSort(input,si,mid);
+    mergeSort(input,mid+1,ei);
+    merge(input,si,mid,ei);
+}
+
 int main(){
-    // int n;
-    // cout<<"Enter a number:";
-    // // cout<<"Enter the power:";
-    // cin>>n;
+    int n;
+    cout<<"Enter a number:";
+    // cout<<"Enter the power:";
+    cin>>n;
+    int *input = new int[n];
+    for(int i=0;i<n;i++){
+        cin>>input[i];
+    }
+    mergeSort(input,0,n-1);
+    for(int i=0;i<n;i++){
+        cout<<input[i]<<" ";
+    }
     // int x;
     // cout<<"Enter the value of x:";
     // cin>>x;
     // // cout<<taylorSeries(x,n);
     // cout<<geometricSum(n,x);
 
-     char str[50];
-     cout<<"Enter a string:";
-     cin>>str;
-     int len=0;
-     for(int i=0;str[i]!='\0';i++){
-          len++;
-     }
+    //  char str[50];
+    //  cout<<"Enter a string:";
+    //  cin>>str;
+    //  int len=0;
+    //  for(int i=0;str[i]!='\0';i++){
+    //       len++;
+    //  }
+    //  removeConsecutiveDuplicates(str);
+    // cout<<str;
+    //  char c1;
+    //  cout<<"Enter c1:";
+    //  cin>>c1;
+    //  char c2;
+    //  cout<<"Enter c2:";
+    //  cin>>c2;
+    //  pairStar(str,len-1);
+    // replaceChar(str,c1,c2);
+    //  cout<<str;
     //  cout<<len;
-     int st=0;
-     int end=len-1;
-      cout<<checkPalindromeRec(str,st,end);
+    //  int st=0;
+    //  int end=len-1;
+    //  cout<<stringtoInteger(str,end);
+    //   cout<<checkPalindromeRec(str,st,end);
+    // replacePi(str,st,end);
+    // cout<<str<<endl;
+    // removeX(str);
+    // cout<<str;
+
 
     // int m;
     // cout<<"Enter a second no:";
@@ -242,6 +416,10 @@ int main(){
     // for(int i=0 ; i<n ; i++){
     //     cin>>arr[i];
     // } 
+    // int *ptr=allIndeces(arr,0,x,0,n-1);
+    // for(int i=0;i<2;i++){
+    //     cout<<ptr[i]<<" ";
+    // }
     // int x;
     // cout<<"Enter a Element that you want to search:";
     // cin>>x;
