@@ -62,17 +62,80 @@ void mergeSort(int input[],int si,int ei){
     merge(input,si,mid,ei);
 }
 
-int main(){
-int n;
-cout<<"Enter a number:";
-cin>>n;
-int *input = new int[n];
-for(int i=0;i<n;i++){
-    cin>>input[i];
-}
-mergeSort(input,0,n-1);
-for(int i=0;i<n;i++){
-    cout<<input[i]<<" ";
+void swap(int *a , int *b){
+  int temp = *a;
+    *a=*b;
+    *b = temp;
 }
 
+int partition(int arr[],int s , int e){
+    int pivot = arr[s];
+    int cnt = 0;
+    for(int i=s+1 ; i<=e ; i++){
+      if(arr[i]<pivot){
+        cnt++;
+      }
+    }
+    int pivotIndex = s+cnt;
+    swap(&arr[s],&arr[pivotIndex]);
+    int i=s,j=e;
+    while(i<pivotIndex && j>pivotIndex){
+        if(arr[i]>pivot && arr[j]<pivot){
+            swap(&arr[i],&arr[j]);
+            i++;
+            j--;
+        } else if(arr[i]<pivot){
+            i++;
+        }else if(arr[j]>pivot){
+            j--;
+        }
+    }
+    return pivotIndex;
 }
+
+void quickSort(int arr[] , int s , int e){
+    if(s>=e){
+        return ;
+    }
+    int p = partition(arr,s,e);
+    quickSort(arr,s,p-1);
+    quickSort(arr,p+1,e);
+}
+
+int substring(string input , string output[]){
+    if(input.empty()){
+        output[0]="";
+        return 1;
+    }
+    string smallString = input.substr(1);
+    int smallOutput = substring(smallString,output);
+    for(int i = 0;i<smallOutput ; i++){
+        output[i+smallOutput] = input[0]+output[i];
+    }
+    return 2*smallOutput;
+}
+
+int main(){
+// int n;
+// cout<<"Enter a number:";
+// cin>>n;
+// int *input = new int[n];
+// for(int i=0;i<n;i++){
+//     cin>>input[i];
+// }
+// // mergeSort(input,0,n-1);
+// // for(int i=0;i<n;i++){
+// //     cout<<input[i]<<" ";
+// // }
+// quickSort(input,0,n-1);
+// for(int i=0 ; i<n ; i++){
+//     cout<<input[i]<<" ";
+string str;
+cin>>str;
+string *output = new string[100];
+int count = substring(str,output);
+for(int i=0;i<count;i++){
+cout<<output[i]<<endl;
+}
+}
+
