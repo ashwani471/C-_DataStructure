@@ -115,6 +115,56 @@ int substring(string input , string output[]){
     return 2*smallOutput;
 }
 
+void subSeq(string input , string output){
+    if(input.length()==0){
+        cout<<output<<endl;
+        return;
+    }
+    subSeq(input.substr(1),output);
+    subSeq(input.substr(1),output+input[0]);
+}
+
+bool checkAB(string str , int s){
+    if(str[s]=='\0'){
+       return true;
+    }
+    if(str[s]!='a'){
+        return false;
+    }
+    if(str[s+1]!='\0' && str[s+2]!='\0'){
+        if(str[s+1]=='b' && str[s+2]=='b'){
+            return checkAB(str,s+3);
+        }
+    }
+    return checkAB(str,s+1);
+}
+
+int stairCase(int n){
+    if(n==0|| n==1){
+        return 1;
+    }
+    else if(n==2){
+        return 2;
+    }else{
+        return stairCase(n-1)+stairCase(n-2)+stairCase(n-3);
+    }
+
+}
+
+int binarySearch(int arr[], int s, int e , int x){
+    if(s>e){
+        return -1;
+    }
+    int mid=(s+e)/2;
+    if(arr[mid]==x){
+        return mid;
+    }else if(arr[mid]>x){
+        return binarySearch(arr,s,mid-1,x);
+    }else{
+        return binarySearch(arr,mid+1,e,x);
+    }
+}
+
 int main(){
 // int n;
 // cout<<"Enter a number:";
@@ -130,12 +180,16 @@ int main(){
 // quickSort(input,0,n-1);
 // for(int i=0 ; i<n ; i++){
 //     cout<<input[i]<<" ";
-string str;
-cin>>str;
-string *output = new string[100];
-int count = substring(str,output);
-for(int i=0;i<count;i++){
-cout<<output[i]<<endl;
+// string str;
+// cin>>str;
+// string *output = new string[100];
+// int count = substring(str,output);
+// for(int i=0;i<count;i++){
+// cout<<output[i]<<endl;
+int n;
+cin>>n;
+int ans = stairCase(n);
+cout<<ans;
 }
-}
+
 
