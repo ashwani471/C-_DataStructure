@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+#include<cmath>
 
 void removeConsecutiveDuplicates(char str[]){
     if(str[0]=='\0'|| str[1]=='\0'){
@@ -165,14 +166,44 @@ int binarySearch(int arr[], int s, int e , int x){
     }
 }
 
+int decimaltoBinary(int num){
+    int ans =0;
+    int power = 1;
+    while(num!=0){
+        int r = num%2;
+        num /= 2;
+
+        ans += (r*power);
+        power *= 10;
+    }
+    return ans;
+}
+
 int main(){
-// int n;
-// cout<<"Enter a number:";
-// cin>>n;
-// int *input = new int[n];
-// for(int i=0;i<n;i++){
-//     cin>>input[i];
-// }
+int n;
+cout<<"Enter a number:";
+cin>>n;
+int *input = new int[n];
+for(int i=0;i<n;i++){
+    cin>>input[i];
+}
+int subset = pow(2,n);
+for(int i =0 ; i<subset ; i++){
+    int bn  = decimaltoBinary(i);
+    int div = pow(10,n-1);
+    for(int j =0 ; j<n ; j++){
+        int q = bn/div;
+        int r = bn%div;
+        if(q==0){
+            cout<<"-\t";
+        }else{
+            cout<<input[j]<<"\t";
+        }
+        bn = r;
+        div /= 10;
+    }
+    cout<<endl;
+}
 // // mergeSort(input,0,n-1);
 // // for(int i=0;i<n;i++){
 // //     cout<<input[i]<<" ";
@@ -186,10 +217,10 @@ int main(){
 // int count = substring(str,output);
 // for(int i=0;i<count;i++){
 // cout<<output[i]<<endl;
-int n;
-cin>>n;
-int ans = stairCase(n);
-cout<<ans;
+// int n;
+// cin>>n;
+// int ans = stairCase(n);
+// cout<<ans;
 }
 
 
