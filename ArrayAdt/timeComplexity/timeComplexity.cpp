@@ -53,6 +53,22 @@ void findIntersection(int arr[] , int n ,int arr1[] , int m){
     cout<<endl;
 }
 
+void pairSum(int arr[] , int n ,int x){
+    int i =0;
+    int j=n-1;
+    while(i<j){
+        if(arr[i]+arr[j]>x){
+            j--;
+        }else if(arr[i]+arr[j]<x){
+            i--;
+        }else{
+            cout<<i<<" "<<j<<endl;
+            i++;
+            j--;
+        }
+    }
+}
+
 int main(){
     int n;
     cout<<"Enter the Length of an Array:";
@@ -61,19 +77,21 @@ int main(){
     for(int i=0 ; i<n ;i++){
         cin>>arr[i];
     }
-    int m;
-    cout<<"Enter the length of second array:";
-    cin>>m;
-    int *arr1 = new int[m];
-    for(int j=0;j<m;j++){
-        cin>>arr1[j];
-    }
-    
+    // int m;
+    // cout<<"Enter the length of second array:";
+    // cin>>m;
+    // int *arr1 = new int[m];
+    // for(int j=0;j<m;j++){
+    //     cin>>arr1[j];
+    // }
+    int x;
+    cout<<"Give me pairSum value:";
+    cin>>x;
 
     sort(arr, arr + n);
-    sort(arr1,arr1+m);
-
-    findIntersection(arr,n,arr1,m);
+    // sort(arr1,arr1+m);
+      pairSum(arr,n,x);
+    // findIntersection(arr,n,arr1,m);
     // duplicateNum(arr,n);
     // int uniqueElm= findUnique(arr,n);
     // cout<<uniqueElm;
