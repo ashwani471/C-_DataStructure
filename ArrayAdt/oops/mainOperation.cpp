@@ -1,11 +1,15 @@
 #include<iostream>
 using namespace std;
-// #include"fraction.cpp"
-#include"student.cpp"
+#include"fraction.cpp"
+// #include"student.cpp"
 
 int main(){
-    // Fraction f1(10,2);
-    // Fraction f2(15,4);
+    Fraction f1(10,2);
+    Fraction f2(15,4);
+    Fraction f3 = f1.addNew(f2);
+    f1.print();
+    f2.print();
+    f3.print();
 
     // f1.add(f2);
     //  cout<<endl;
@@ -28,13 +32,17 @@ int main(){
     // c1.multiple(c2);
     // cout<<endl;
     // c1.printComplex();
-     char name[]="Ashwani";
-        student s1(24,name);
-        s1.display();
-        name[3]='v';
-        student s2(24,name);
+    //  char name[]="Ashwani";
+    //     student s1(24,name);
+    //     s1.display();
+    //     name[3]='v';
+    //     student s2(24,name);
         
-        s2.display();
+    //     s2.display();
+
+    //     student s3(101);
+
+
 
 
 }

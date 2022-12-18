@@ -11,7 +11,23 @@ class Fraction {
             this-> denominator = denominator;
          }
 
-         void print(){
+         int getnumerator() const{
+            return numerator;
+         }
+
+         int denominator() const{
+            return denominator;
+         }
+
+         void setnumerator(int n){
+           numerator = n;
+         }
+
+         void setdenominator(int d){
+            denominator = d;
+         }
+
+         void print() const{
            cout<<this->numerator<<"/"<<this->denominator;
          }    
           
@@ -36,6 +52,40 @@ class Fraction {
             numerator = num;
             denominator = lcm;
             simplify();
+          }
+
+          Fraction addNew(Fraction const &f2){
+            int lcm = denominator*f2.denominator;
+            int x= lcm/this->denominator;
+            int y = lcm/f2.denominator;
+
+            int num = x*this->numerator+(y*f2.numerator);
+            // numerator = num;
+            // denominator = lcm;
+            Fraction fNew(num,lcm);
+            fNew.simplify();
+            return fNew;
+          }
+
+          Fraction operator+(Fraction const &f2) const{
+            int lcm = denominator*f2.denominator;
+            int x= lcm/this->denominator;
+            int y = lcm/f2.denominator;
+
+            int num = x*this->numerator+(y*f2.numerator);
+            // numerator = num;
+            // denominator = lcm;
+            Fraction fNew(num,lcm);
+            fNew.simplify();
+            return fNew;
+          }
+
+         Fraction operator*(Fraction const &f2) const{
+            int n = this->numerator*f2.numerator;
+            int d = this->denominator*f2.denominator;
+            Fraction fNewMul(n,d);
+            fNewMul.simplify();
+            return fNewMul;
           }
 
           void miltiplication(Fraction const &f2){
