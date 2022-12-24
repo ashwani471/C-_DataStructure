@@ -2,6 +2,12 @@
 using namespace std;
 #include"linkedListClass.cpp"
 
+class Pair{
+    public:
+     Node *head;
+     Node *Tail;
+};
+
 Node *takeInput(){
     int data;
     cout<<"Enter data:";
@@ -310,6 +316,125 @@ Node *reverseLL2(Node *head){
     return smallAns;
 }
 
+
+Pair reverseLL2_New(Node *head){
+    if(head == NULL || head->next == NULL){
+        Pair ans;
+        ans.head = head ;
+        ans.Tail = head;
+        return ans;  
+    }
+    Pair smallAns = reverseLL2_New(head->next);
+     smallAns.Tail->next = head;
+     head->next = NULL;
+     Pair ans;
+     ans.head = smallAns.head;
+     ans.Tail = head;
+     return ans;
+}
+
+Node *reverseLL_Better(Node *head){
+    return reverseLL2_New(head).head;
+}
+
+Node *reverseLL3(Node *head){
+    if(head == NULL || head->next == NULL){
+        return head;
+    }
+    Node *smallAns = reverseLL2(head->next);
+    Node *tail = head->next;
+    tail->next = head;
+    head->next = NULL;
+    return smallAns;
+
+}
+
+int findNode(Node *head,int n){
+   Node *temp = head;
+   int cnt = 0;
+   while(temp->next!=NULL){
+      if(temp->data == n){
+        return cnt+1;
+        break;
+      }
+      temp=temp->next;
+      cnt++;
+   }
+}
+
+Node *evenAfterOdd(Node *head){
+    int oddCnt = 0;
+    int evenCnt =0;
+
+    Node *temp = head;
+    while(temp!=NULL){
+        if(temp->data%2==0){
+            evenCnt++;
+        }else{
+            oddCnt++;
+        }
+        temp=temp->next;
+    }
+    if(oddCnt==0 || evenCnt==0){
+        return head;
+    }
+    else{
+        Node *oddHead =NULL;
+        Node *oddTail = NULL;
+        Node *evenTail = NULL;
+        Node *evenHead = NULL;
+        Node *temp1=head;
+        while(temp1!=NULL){
+            if(temp1->data%2 ==0){
+                if(evenHead == NULL && evenTail == NULL){
+                    evenHead =NULL;
+                    evenTail = NULL;
+                }else{
+                     evenTail->next=temp1;
+                     evenTail = temp1;
+                }
+            }else{
+               if(oddHead == NULL && oddTail == NULL){
+                    oddHead =NULL;
+                    oddTail = NULL;
+                }else{
+                     oddTail->next=temp1;
+                     oddTail = temp1;
+                } 
+            }
+        }
+        oddTail->next = evenHead;
+        evenTail->next = NULL;
+        return oddHead;
+    }
+}
+
+Node *mAfternNode(Node *head,int m ,int n){
+    Node *temp1 = head;
+    Node *temp2 = NULL;
+    int cntM = 0;
+    int cntN = 0;
+    while (temp1!=NULL || temp2!=NULL){
+        while(cntM<m){
+        temp1=temp1->next;
+        cntM++;
+        }
+        temp2 = temp1->next;
+        while(cntN<n){
+            temp2 = temp2->next;
+            cntN++;
+        }
+        temp2=temp2->next;
+        temp1->next=temp2;
+        temp1= temp2;
+        cntM=0;
+        cntN=0;
+        
+    }
+    temp1->next=NULL;
+    return head;    
+}
+
 int main(){
     // Node n1(1);
     // Node n2(2);
@@ -330,13 +455,18 @@ int main(){
 	// }
 	// return 0;
 
-    Node *head1 = takeInput_better();
-    Node *head2 = takeInput_better();
+    Node *head = takeInput_better();
+    // int n;
+    // cin>>n;
+    // int index = findNode(head,n);
+    // cout<<index;
+    Node *fhead = evenAfterOdd(head);
+    // Node *head2 = takeInput_better();
     // reverseLL(head);
     // midLL(head);
-    Node *fh=merge2LL(head1,head2);
+    // Node *fh=merge2LL(head1,head2);
     // cout<<mid;
-    // print(head);
+    print(fhead);
     // int i,data;
     // cin>>i>>data;
     // int n;
@@ -345,7 +475,7 @@ int main(){
     // head = insertNode(head , i, data);
     // head = appendLast2(head,n);
     // head = removeDuplicate(head);
-    print(fh);
+    // print(fh);
 
 
 }
