@@ -225,7 +225,90 @@ void reverseLL(Node *head){
      reverseLL(temp->next);
 }
 
+Node *midLL(Node *head){
+    Node *slow = head;
+    Node *fast = head;
+    while (fast->next!=NULL && fast!=NULL){
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    return slow;
+}
 
+Node *merge2LL(Node *head1 , Node *head2){
+    Node *fHead = NULL;
+    Node *fTail = NULL;
+    if(head1->data < head2->data){
+        Node *fHead = head1;
+        Node *fTail = head1;
+        head1 = head1->next;
+    }else{
+        Node *fHead = head2;
+        Node *fTail= head2;
+        head2 = head2->next;
+    }
+    while(head1!=NULL && head2!=NULL){
+        if(head1->data <= head2->data){
+            fTail->next=head1;
+             fTail = head1;
+            head1=head1->next;
+           
+        }else{
+            fTail->next = head2;
+             fTail = head2;
+            head2 = head2->next;
+            // fHead->next = head1;
+           
+        }
+    }
+    if(head1!=NULL && head2==NULL){
+        while(head1!=NULL){
+            fTail=head1;
+            head1 = head1->next;
+        }
+        head1->next=NULL;
+
+    }
+    else{
+         while(head2!=NULL){
+            fTail=head2;
+            head2 = head2->next;
+        }
+        head2->next=NULL;
+    }
+    return fHead;
+}
+
+Node *mergeSort(Node *head){
+    if(head == NULL || head->next == NULL){
+      return head;
+    }
+    Node *middle = midLL(head);
+    Node *p = middle->next;
+    middle->next = NULL;
+
+    Node *firstLL = mergeSort(head);
+    Node *secondLL = mergeSort(p);
+
+    Node *sortedList=merge2LL(firstLL,secondLL);
+    return sortedList;
+
+}
+
+Node *reverseLL2(Node *head){
+    if(head == NULL || head->next == NULL){
+        return head;
+    }
+    Node *smallAns = reverseLL2(head->next);
+
+    Node *temp = smallAns;
+    while(temp->next != NULL){
+        temp = temp->next;
+    }
+    temp->next=head;
+    head->next=NULL;
+    return smallAns;
+}
 
 int main(){
     // Node n1(1);
@@ -247,8 +330,12 @@ int main(){
 	// }
 	// return 0;
 
-    Node *head = takeInput_better();
-    reverseLL(head);
+    Node *head1 = takeInput_better();
+    Node *head2 = takeInput_better();
+    // reverseLL(head);
+    // midLL(head);
+    Node *fh=merge2LL(head1,head2);
+    // cout<<mid;
     // print(head);
     // int i,data;
     // cin>>i>>data;
@@ -258,7 +345,7 @@ int main(){
     // head = insertNode(head , i, data);
     // head = appendLast2(head,n);
     // head = removeDuplicate(head);
-    print(head);
+    print(fh);
 
 
 }
