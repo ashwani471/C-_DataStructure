@@ -434,6 +434,48 @@ Node *mAfternNode(Node *head,int m ,int n){
     temp1->next=NULL;
     return head;    
 }
+// static int i = 1;
+Node * kReverse(Node * head , int n){
+    Pair a;
+    Node *temp = head;
+    Node *newHead = NULL;
+    Node *newTail = NULL;
+    Node *next = NULL;
+    Node *CurrHead = NULL;
+    int cnt = 1;
+    while(cnt < n){
+        temp = temp->next;
+        next = temp->next;
+        cnt++;
+    }
+    temp->next = NULL;
+    CurrHead = next;
+    a = reverseLL2_New(head);
+    newHead = a.head;
+    newTail = a.Tail;
+    temp=next;
+    while(temp != NULL){
+        // Pair b;
+        cnt = 1;
+        while(cnt<n){
+        temp = temp->next;
+        if(temp == NULL){
+            newTail->next=temp;
+        }
+        next = temp->next;
+        
+        cnt++; 
+        }
+        temp->next = NULL;
+        a = reverseLL2_New(CurrHead);
+        CurrHead = next;
+        newTail->next=a.head;
+        newTail = a.Tail;
+        temp=next;
+    }
+
+
+}
 
 int main(){
     // Node n1(1);
@@ -456,11 +498,11 @@ int main(){
 	// return 0;
 
     Node *head = takeInput_better();
-    // int n;
-    // cin>>n;
+    int n;
+    cin>>n;
     // int index = findNode(head,n);
     // cout<<index;
-    Node *fhead = evenAfterOdd(head);
+    Node *fhead = kReverse(head,n);
     // Node *head2 = takeInput_better();
     // reverseLL(head);
     // midLL(head);
