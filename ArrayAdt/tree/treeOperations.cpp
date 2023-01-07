@@ -144,7 +144,7 @@ for(int i=0;i<root->children.size() ;i++){
 
 int countLeafNode(treeNode<int>* root){
     if(root == NULL){
-        return;
+        return 0;
     }
     if(root->children.size()==0){
         return 1;
@@ -157,6 +157,125 @@ int countLeafNode(treeNode<int>* root){
     return count;
 }
 
+void preOrder(treeNode<int>* root){
+    if(root == NULL){
+        return;
+    }
+    cout<<root->data<<":";
+    for(int i=0 ; i<root->children.size() ;i++){
+        preOrder(root->children[i]);
+    }
+}
+
+void postOrder(treeNode<int>* root){
+    if(root == NULL){
+        return;
+    }
+    for(int i = 0 ;i<root->children.size() ;i++){
+        postOrder(root->children[i]);
+    }
+    cout<<root->data<<" ";
+}
+
+bool containX(treeNode<int>* root , int x){
+    if(root = NULL){
+        return 0;
+    }
+    if(root->data == x){
+        return true;
+    }
+    for(int i = 0 ; i<root->children.size() ;i++){
+        bool ans = containX(root->children[i] , x);
+        if(ans){
+            return true;
+        }
+    }
+    return false;
+}
+
+int nodesGreaterthenX(treeNode<int> * root , int x){
+    if(root == NULL){
+        return 0;
+    }
+    int cnt = 0;
+    if(root->data > x){
+     cnt++;
+    }
+    for(int i =0 ; i<root->children.size() ; i++){
+        int smalloutput = nodesGreaterthenX(root->children[i],x);
+        cnt+=smalloutput;
+    }
+    return cnt;
+}
+
+maxSumNode<int>* maxchildRootSum(treeNode<int>* root){
+    if(root == NULL){
+        maxSumNode<int>* pair = new maxSumNode<int>();
+        pair->root = NULL;
+        pair->max = INT16_MIN;
+        return pair;
+    }
+    int sum = root->data;
+    for(int i=0 ; i<root->children.size() ; i++){
+       sum+=root->children[i]->data;
+    }
+    maxSumNode<int>* ans = new maxSumNode<int>();
+    ans->root = root;
+    ans->max = sum;
+
+    for(int i=0 ; i<root->children.size() ; i++){
+        maxSumNode<int>* childsum = maxchildRootSum(root->children[i]);
+        if(childsum->max>ans->max){
+          ans=childsum;
+        }
+    }
+    return ans;
+}
+
+bool isIdentical(treeNode<int>* root1 , treeNode<int>* root2){
+    if(root1 == NULL && root2 == NULL){
+        return false;
+    }
+    if(root1->data != root2->data || (root1->children.size()!=root2->children.size())){
+        return false;
+    }
+    if((root1 == NULL && root2!=NULL ) || root1 != NULL && root2 == NULL){
+       return false;
+    }
+    int i=0;
+    while(i<root1->children.size()){
+        treeNode<int>* child1 = root1->children[i];
+        treeNode<int>* child2 = root2->children[i];
+        if(isIdentical(child1,child2)){
+            return i++;
+        }else{
+            return false;
+        }
+    }
+    return true;
+}
+
+treeNode<int>* nextBiggerValue(treeNode<int>* root ,int n){
+    if(root == NULL){
+        return root;
+    }
+    treeNode<int>* ans = NULL;
+    if(root->data > n){
+        ans = root;
+    }
+    for(int i=0; i<root->children.size() ;i++){
+        treeNode<int>* temp = nextBiggerValue(root->children[i] , n);
+        if(ans == NULL){
+            ans = temp;
+        }else{
+            if(temp!=NULL && ans->data > temp->data){
+                ans = temp;
+            }
+        }
+    }
+    return ans;
+}
+
 int main(){
     // treeNode<int> *root = new treeNode<int>(1);
     // treeNode<int> *node1 = new treeNode<int>(2);
@@ -165,6 +284,12 @@ int main(){
     // root->children.push_back(node2);
     treeNode<int> *root = takeInputlvelwise();
     printTreeLvlwise(root);
-    cout<<countNode(root);
-    cout<<sumofNode(root);
+    // cout<<countNode(root);
+    int x;
+    cout<<"nodeData:";
+    cin>>x;
+    cout<<nodesGreaterthenX(root,x);
+
+    // cout<<sumofNode(root);
+    delete root;
   }

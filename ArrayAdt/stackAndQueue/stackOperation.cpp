@@ -4,6 +4,7 @@ using namespace std;
 // #include "stackClassusingArray.cpp"
 #include "stackusingLL.h"
 #include "QueueUsingArray.h"
+#include<queue>
 
 bool checkBalanced(char str[]){
   int len = strlen(str);
@@ -56,6 +57,16 @@ void reverseStack(stackLL<int> &input, stackLL<int> &extra , int n) {
 
 }
 
+void reverseQueue(queue<int> &q){
+    if(q.empty()){
+        return;
+    }
+    int front = q.front();
+    q.pop();
+    reverseQueue(q);
+    q.push(front);
+}
+
 
 int main() {
     stackLL<int> input, extra;
@@ -73,6 +84,23 @@ int main() {
         cout << input.top() << " ";
         input.pop();
     }
+
+    queue<int> q;
+    int size;
+    cin>>size;
+
+    for(int i =0,val ;i<size ;i++){
+        cin>>val;
+        q.push(val);
+    }
+
+    reverseQueue(q);
+    while(!q.empty()){
+        cout<<q.front()<<" ";
+        q.pop();
+    }
+
+    cout<<endl;
 
     // int n;
     // QueueArray<int> q,p;
