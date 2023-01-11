@@ -67,6 +67,40 @@ void reverseQueue(queue<int> &q){
     q.push(front);
 }
 
+bool checkredundant(char *str , int n){
+    stackLL<int> st;
+     for(int i= 0 ; i<n ;i++){
+       if(str[i]==')'){
+          char top = st.top();
+        //   st.pop();
+          if(top == '('){
+            return false;
+          }
+          while(!st.isEmpty()){
+            bool oprtrFnd=false;
+            while(top!='('){
+                if(top=='+'||top=='-'||top=='*'||top=='/'){
+                    oprtrFnd=true;
+                }
+                st.pop();
+                top=st.top();
+            }
+            if(oprtrFnd==false){
+                return false;
+            }
+            else{
+                oprtrFnd=false;
+                st.pop();
+            }
+          }
+       }
+
+       else{
+        st.push(str[i]);
+       }
+     }
+     return false;
+}
 
 int main() {
     stackLL<int> input, extra;

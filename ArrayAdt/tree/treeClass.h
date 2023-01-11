@@ -28,3 +28,16 @@ class maxSumNode{
     //  this->max = data;
     // }
 };
+
+template<typename T>
+class secondLargestReturnType{
+  public:
+   treeNode<T> *Largest;
+   treeNode<T> *secondLargest:
+
+  secondLargestReturnType(treeNode<T> *first , treeNode<T> *second){
+    this->Largest = first;
+    this->secondLargest = second;
+  }
+};
+
