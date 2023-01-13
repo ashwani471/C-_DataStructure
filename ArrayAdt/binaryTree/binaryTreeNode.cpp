@@ -19,6 +19,30 @@ printBinaryTree(root->left);
 printBinaryTree(root->right);
 }
 
+void printTreeLvlwise(BinaryTreeNode<int>* root){
+    if(root == NULL){
+        return;
+    }
+    // cout<<root->data<<":";
+    queue<BinaryTreeNode<int>*> pendingNode;
+    pendingNode.push(root);
+    while(pendingNode.size()!=0){
+        BinaryTreeNode<int>* front = pendingNode.front();
+        pendingNode.pop();
+        cout<<front->data<<":";
+        if(front->left!=NULL){
+            cout<<"L"<<front->left->data<<",";
+            pendingNode.push(front->left);
+        }
+        if(front->right!=NULL){
+            cout<<"R"<<front->right->data<<endl;
+            pendingNode.push(front->right);
+        }
+    }
+    // printTreeLvlwise(root->left);
+    // printTreeLvlwise(root->right);
+}
+
 BinaryTreeNode<int>* takeInput(){
    int rootData;
    cout<<"Enter rootData:"<<endl;
@@ -70,7 +94,73 @@ BinaryTreeNode<int>* takeInputlvlwise(){
 
 }
 
+int numNodes(BinaryTreeNode<int>* root){
+    if(root == NULL){
+        return 0;
+    }
+    return 1+numNodes(root->left)+numNodes(root->right);
+}
+
+bool isPresent(BinaryTreeNode<int>* root , int x){
+    if(root == NULL){
+        return false;
+    }
+    if(root->data == x){
+        return true;
+    }
+
+    bool left = isPresent(root->left , x);
+    if(left){
+        return true;
+    }
+    bool right = isPresent(root->right, x);
+        if(right){
+            return true;
+        }
+}
+
+int height(BinaryTreeNode<int>* root){
+    if(root == NULL){
+        return 0;
+    }
+    int lH=height(root->left);
+    int rH=height(root->right);
+    if(lH<rH){
+        return rH+1;
+    }else{
+        return lH+1;
+    }
+}
+
+void inOrder(BinaryTreeNode<int>* root){
+    if(root==NULL){
+        return;
+    }
+    inOrder(root->left);
+    cout<<root->data<<" ";
+    inOrder(root->right);
+}
+
+void preOrder(BinaryTreeNode<int>* root){
+    if(root==NULL){
+        return;
+    }
+    cout<<root->data<<" ";
+    preOrder(root->left);
+    preOrder(root->right);
+}
+
+void postOrder(BinaryTreeNode<int>* root){
+    if(root==NULL){
+        return;
+    }
+    postOrder(root->left);
+    postOrder(root->right);
+    cout<<root->data<<" ";
+}
+
+
 int main(){
     BinaryTreeNode<int> *root = takeInputlvlwise();
-    printBinaryTree(root);
+    printTreeLvlwise(root);
 }
