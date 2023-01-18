@@ -159,8 +159,123 @@ void postOrder(BinaryTreeNode<int>* root){
     cout<<root->data<<" ";
 }
 
+int heights(BinaryTreeNode<int>* root){
+    if(root==NULL){
+        return 0;
+    }
+    return 1+(max(height(root->left),height(root->right)));
+}
+
+int diameter(BinaryTreeNode<int>* root){
+    if(root==NULL){
+        return 0;
+    }
+    int option1 = height(root->left)+height(root->right);
+    int option2 = diameter(root->left);
+    int option3 = diameter(root->right);
+
+    return max(option1 , max(option2,option3));
+}
+
+pair<int,int> heightDiameter(BinaryTreeNode<int>* root){
+    if(root==NULL){
+        pair<int,int> p;
+        p.first = 0;
+        p.second = 0;
+        return p;
+    }
+    pair<int, int> leftAns = heightDiameter(root->left);
+    pair<int,int> rightAns = heightDiameter(root->right);
+    int ld = leftAns.second;
+    int lh = leftAns.first;
+    int rd = rightAns.second;
+    int rh = rightAns.first;
+    
+    int height = 1+max(lh,rh);
+    int diameter = max(lh+rh , max(rd,ld));
+    pair<int,int> p;
+    p.first = height;
+    p.second = diameter;
+    return p;
+}
+
+pair<int,int> minMax(BinaryTreeNode<int>* root){
+    if(root == NULL){
+        pair<int,int> p;
+        p.first = INT32_MIN;
+        p.second = INT32_MAX;
+        return p;
+    }
+    pair<int,int> leftAns = minMax(root->left);
+    pair<int,int> rightAns = minMax(root->right);
+    int lMin = leftAns.second;
+    int lmax = leftAns.first;
+    int Rmin = rightAns.second;
+    int Rmax = rightAns.first;
+
+    int maximum = max(root->data,max(lmax,Rmax));
+    int minimum = min(root->data,min(lMin,Rmin));
+
+    pair<int,int> p;
+    p.first = maximum;
+    p.second = minimum;
+}
+
+int SumofNodes(BinaryTreeNode<int>* root){
+    if(root==NULL){
+        return 0;
+    }
+    return root->data+SumofNodes(root->left)+SumofNodes(root->right);
+}
+
+bool isBalanced(BinaryTreeNode<int>* root){
+    if(root==NULL){
+        return true;
+    }
+    int leftHeihght = heights(root->left);
+    int rightHeight = heights(root->right);
+    if(leftHeihght-rightHeight > 1 || rightHeight-leftHeihght >1){
+        return false;
+    }
+    bool a = isBalanced(root->left);
+    bool b = isBalanced(root->right);
+    if(a&&b){
+        return true;
+    }
+    return false;
+}
+
+void lvlordertraversal(BinaryTreeNode<int>* root){
+    if(root == NULL){
+        return;
+    }
+    queue<BinaryTreeNode<int>*> q;
+    q.push(root);
+    q.push(NULL);
+    BinaryTreeNode<int>* current;
+    while(q.size()>1){
+        current = q.front();
+        q.pop();
+        if(current== NULL){
+            cout<<endl;
+            // q.pop();
+            q.push(NULL);
+        }else{
+        cout<<current->data<<",";
+        if(current->left!=NULL){
+            q.push(current->left);
+        }
+        if(current->right!=NULL){
+            q.push(current->right);
+        }
+        }
+        
+    }
+}
 
 int main(){
     BinaryTreeNode<int> *root = takeInputlvlwise();
-    printTreeLvlwise(root);
+    // printTreeLvlwise(root);
+    lvlordertraversal(root);
+    cout<<SumofNodes(root);
 }
