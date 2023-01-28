@@ -273,6 +273,12 @@ void lvlordertraversal(BinaryTreeNode<int>* root){
     }
 }
 
+BinaryTreeNode<int>* removeLeafnode(BinaryTreeNode<int>* root){
+    if(root == NULL){
+        return;
+    }
+}
+
 int main(){
     BinaryTreeNode<int> *root = takeInputlvlwise();
     // printTreeLvlwise(root);
