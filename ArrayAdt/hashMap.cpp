@@ -3,6 +3,7 @@ using namespace std;
 #include<unordered_map>
 #include<vector>
 
+
 vector<int> removeDuplicate(int *a ,int n){
     vector<int> output;
     unordered_map<int , bool> seen;
@@ -49,8 +50,29 @@ vector<int> arrayIntersection(int *arr1 , int *arr2 , int size1 , int size2){
     return output1;
 }
 
+vector<pair<int,int>> pairsumtoZero(int *arr , int n){
+   unordered_map<int,int> pairSum;
+   vector<pair<int,int>> v;
+   pair<int,int> p;
+   for(int i=0 ; i<n ; i++){
+    if(arr[i]>0){
+        pairSum[arr[i]]++;
+    }
+   }
+   for(int i=0 ; i<n ;i++){
+    if(arr[i]<0){
+         int a = (-1)*arr[i];
+         pairSum[a]--;
+         p.first=a;
+         p.second=arr[i];
+         v.push_back(p);
+    }
+   }
+  return v;
+}
+
 int main(){
-    int arr[] = {1,2,3,1,2,3,4,10};
+    int arr[] = {1,2,3,-1,-2,3,4,10};
     int arr1[]={1,2,3,1,6,10};
     // vector<int>output = removeDuplicate(arr , 7);
     // for(int i=0 ; i<output.size() ;i++){
@@ -58,8 +80,14 @@ int main(){
     // }
     // int max = highestFrequencyNum(arr , 8);
     // cout<<max;
-    vector<int> output = arrayIntersection(arr,arr1,8,6);
-    for(int i=0 ; i<output.size() ;i++){
-        cout<<output[i]<<endl;
-    }
+    // vector<int> output = arrayIntersection(arr,arr1,8,6);
+    // for(int i=0 ; i<output.size() ;i++){
+    //     cout<<output[i]<<endl;
+    // }
+    vector<pair<int,int>> v = pairsumtoZero(arr,8);
+     vector<pair<int,int>>::iterator it =v.begin();
+   while(it!=v.end()){
+    cout<<it->first<<" "<<it->second<<endl;
+    it++;
+   }
 }
