@@ -29,7 +29,7 @@ class Tries{
       insert(child,Word.substr(1));
  }
 
- bool remove(TrieNode *root , string Word){
+ bool Search(TrieNode *root , string Word){
     if(Word.size()==0){
         if(root->isTerminal == true){
             return true;
@@ -41,10 +41,35 @@ class Tries{
     TrieNode *child;
     if(root->children[index]!=NULL){
         child = root->children[index];
-        return remove(child,Word.substr(1));
+        return Search(child,Word.substr(1));
     }else{
         return false;
     }
+ }
+
+ void removeWord(TrieNode *root , string Word){
+    if(Word.size()==0){
+        root->isTerminal = false;
+        return;
+    }
+    int index = Word[0]-'a';
+    TrieNode *child;
+    if(root->children[index]!=NULL){
+       child = root->children[index];
+    }else{
+       return;
+    }
+     removeWord(child , Word.substr(1));
+
+     if(child->isTerminal == false){
+        for(int i=0 ;i<26 ;i++){
+            if(child->isTerminal!=NULL){
+                return;
+            }
+        }
+        delete child;
+        root->children = NULL;
+     }
  }
 
      //for user
@@ -52,7 +77,7 @@ class Tries{
        insert(root , Word);
      }
 
-     bool remove(string Word){
-        remove(root , Word);
+     bool Search(string Word){
+        Search(root , Word);
      }
 };
